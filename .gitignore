@@ -1,0 +1,32 @@
+# Entorno virtual de Python
+.venv/
+venv/
+env/
+
+# Cache de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Configuraciones locales
+config.local.*
+
+# Resultados de búsquedas (opcional)
+resultados_*.json
+resultados_*.csv
+resultados_*.xml
