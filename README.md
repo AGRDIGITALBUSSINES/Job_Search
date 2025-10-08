@@ -87,11 +87,6 @@ El sistema ahora combina categorías con palabras clave específicas para result
 - Remote (prioritario)
 - Colombia, United States, Canada, Europe
 
-#### **Salarios Objetivo:**
-- Mínimo: $30,000 USD
-- Preferido: $60,000 USD  
-- Objetivo: $100,000+ USD
-
 ### 📊 Tipos de Resultados
 
 1. **🎯 Empleos Reales** (APIs públicas):
@@ -114,43 +109,6 @@ El sistema exporta en 5 formatos:
 - **HTML**: Reporte visual navegable
 - **TXT**: Texto simple legible
 
-### ⚙️ Configuración Incorporada
-
-Todo está pre-configurado, pero puedes ajustar:
-- Preferencias salariales
-- Filtros de búsqueda (solo remotos, excluir agencias)
-- Categorías de empleos
-- Ubicaciones preferidas
-
-### ⭐ Sistema de Puntuación Inteligente
-
-El sistema ahora rankea empleos usando múltiples factores:
-
-1. **🎯 Relevancia de Términos** (Nuevo):
-   - Título del empleo: +3 puntos por término
-   - Empresa: +2 puntos por término  
-   - Descripción: +1 punto por término
-
-2. **💰 Puntuación Salarial**:
-   - $100K+: +50 puntos
-   - $60K-$99K: +30 puntos
-   - $30K-$59K: +10 puntos
-
-3. **📍 Ubicación Preferida**:
-   - Remote: +10 puntos
-   - Colombia: +9 puntos
-   - US/Canada/Europe: +8-6 puntos
-
-**Resultado**: Empleos más relevantes aparecen primero
-
-### 💡 Ejemplos de Resultados Reales
-
-El sistema encuentra empleos como:
-- **Python Developer Remote** - $80,000-$120,000
-- **BIM Coordinator** - $65,000-$90,000  
-- **Data Analyst Remote** - $70,000-$100,000
-- **Scrum Master** - $90,000-$130,000
-
 ### 🔧 Dependencias
 
 Necesitas:
@@ -163,25 +121,7 @@ Necesitas:
 pip install -r requirements.txt
 ```
 
-### 🎨 Personalización AGRDB
 
-La aplicación incluye:
-- **Logo AGRDB** en el header principal
-- **Pestaña "Acerca de"** con información completa
-- **Footer personalizado** con enlace al desarrollador  
-- **Enlaces directos** al repositorio GitHub y perfil
-- **Información técnica** y de licencia
-
-### ⚡ ¡Ventajas del Sistema AGRDB!
-
-✅ **Marca personalizada**: Logo y branding AGRDB integrado
-✅ **Profesional**: Información completa del desarrollador
-✅ **Fácil distribución**: Un solo archivo para compartir
-✅ **Sin configuraciones complejas**: Todo integrado
-✅ **Portabilidad total**: Funciona en cualquier lugar
-✅ **Menos errores**: No hay dependencias entre archivos
-✅ **Mantenimiento simple**: Todo en un lugar
-✅ **Enlaces directos**: Acceso rápido al repositorio y perfil
 
 ### 🎉 ¡Listo para usar!
 
@@ -190,7 +130,6 @@ La aplicación incluye:
 3. Ejecuta `python job_search_bim.py`
 4. ¡Comienza a buscar empleos con estilo AGRDB!
 
-**¡El sistema está completo, funcional y personalizado con marca AGRDB en un solo archivo!** 🚀
 
 ---
 
