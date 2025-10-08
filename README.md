@@ -130,20 +130,20 @@ pip install -r requirements.txt
 3. Ejecuta `python job_search_bim.py`
 4. ¡Comienza a buscar empleos con estilo AGRDB!
 
-### 📥 Descarga la Versión Ejecutable (Windows)
+### 📥 Descarga la Versión Ejecutable (v1.0.0 para Windows)
 
 **¿No quieres instalar Python? ¡No hay problema!**
 
-Descarga la versión portable que incluye todo lo necesario para ejecutar el programa con un solo clic.
+Descarga la versión ejecutable desde la sección de **Releases** de GitHub. Incluye todo lo necesario para ejecutar el programa con un solo clic.
 
-- **[➡️ Descargar JobSearchBIM_AGRDB.exe ⬅️](JobSearchBIM_Portable/JobSearchBIM_AGRDB.exe)**
+- **[➡️ Descargar JobSearchBIM_AGRDB.exe (v1.0.0) ⬅️](https://github.com/AGRDIGITALBUSSINES/Job_Search/releases/download/v1.0.0/JobSearchBIM_AGRDB.exe)**
 
 **Instrucciones:**
-1. Descarga el archivo `JobSearchBIM_AGRDB.exe`.
-2. Ejecuta el archivo.
-3. ¡Listo! El programa se iniciará.
+1.  Descarga el archivo `JobSearchBIM_AGRDB.exe` usando el enlace anterior.
+2.  **Opcional:** Para que el logo se muestre correctamente, descarga también el archivo `AGRDB_Logo.png` desde la misma página de la release y colócalo en la misma carpeta que el `.exe`.
+3.  ¡Ejecuta el archivo `.exe` y listo!
 
-*Nota: Para que el logo se muestre, el archivo `AGRDB_Logo.png` debe estar en la misma carpeta que el ejecutable.*
+Para ver otras versiones o descargar los archivos fuente, visita la [**página de Releases del proyecto**](https://github.com/AGRDIGITALBUSSINES/Job_Search/releases).
 
 ---
 
