@@ -23,7 +23,7 @@
 - **ℹ️ Sección "Acerca de"** con información completa del desarrollador
 - **👨‍💻 Footer personalizado** con enlace al perfil AGRDB
 
-### 🚀 Cómo Usar (¡Súper Fácil!)
+### 🚀 Cómo Usar (Para Desarrolladores)
 
 ```bash
 # 1. Activar entorno virtual
@@ -130,6 +130,20 @@ pip install -r requirements.txt
 3. Ejecuta `python job_search_bim.py`
 4. ¡Comienza a buscar empleos con estilo AGRDB!
 
+### 📥 Descarga la Versión Ejecutable (Windows)
+
+**¿No quieres instalar Python? ¡No hay problema!**
+
+Descarga la versión portable que incluye todo lo necesario para ejecutar el programa con un solo clic.
+
+- **[➡️ Descargar JobSearchBIM_AGRDB.exe ⬅️](JobSearchBIM_Portable/JobSearchBIM_AGRDB.exe)**
+
+**Instrucciones:**
+1. Descarga el archivo `JobSearchBIM_AGRDB.exe`.
+2. Ejecuta el archivo.
+3. ¡Listo! El programa se iniciará.
+
+*Nota: Para que el logo se muestre, el archivo `AGRDB_Logo.png` debe estar en la misma carpeta que el ejecutable.*
 
 ---
 
