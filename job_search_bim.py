@@ -31,79 +31,209 @@ import threading
 import webbrowser
 
 # Dependencias externas
+PIL_AVAILABLE = False
 try:
     import tkinter as tk
     from tkinter import ttk, filedialog, messagebox, scrolledtext
-    from PIL import Image, ImageTk
-    import requests
+    print("✅ tkinter importado correctamente")
 except ImportError as e:
-    if "PIL" in str(e):
-        print(f"❌ Error: Falta dependencia Pillow para el logo")
-        print("📦 Instala con: pip install Pillow")
-        # Continuar sin logo si Pillow no está disponible
-        PIL_AVAILABLE = False
-    else:
-        print(f"❌ Error: Falta dependencia {e}")
-        print("📦 Instala con: pip install requests")
-        sys.exit(1)
-else:
+    print(f"❌ Error con tkinter: {e}")
+    sys.exit(1)
+
+try:
+    import requests
+    print("✅ requests importado correctamente")
+except ImportError as e:
+    print(f"❌ Error: Falta dependencia requests")
+    print("📦 Instala con: pip install requests")
+    sys.exit(1)
+
+# Intentar importar PIL (opcional para el logo)
+try:
+    from PIL import Image, ImageTk  # type: ignore
     PIL_AVAILABLE = True
+    print("✅ PIL/Pillow disponible - Logo habilitado")
+except ImportError:
+    print("⚠️ PIL/Pillow no disponible - Logo deshabilitado")
+    print("📦 Para habilitar logo: pip install Pillow")
+    PIL_AVAILABLE = False
 
 # ============================================================================
 # CONFIGURACIÓN
 # ============================================================================
 
-# Categorías de empleos optimizadas para perfil BIM/GIS
+# Categorías de empleos optimizadas para perfil BIM/GIS - AMPLIADO Y OPTIMIZADO
 JOB_CATEGORIES = {
     "BIM Especialista": [
+        # BIM Core
         "BIM Coordinator", "BIM Manager", "BIM Specialist", "Building Information Modeling", 
-        "BIM Modeler", "BIM Engineer", "BIM Consultant", "Digital Construction"
+        "BIM Modeler", "BIM Engineer", "BIM Consultant", "Digital Construction",
+        # BIM Avanzado
+        "BIM Director", "BIM Lead", "BIM Analyst", "BIM Technician", "BIM Administrator",
+        "Virtual Design Construction", "VDC Engineer", "VDC Coordinator", "VDC Manager",
+        # BIM Software Específico
+        "Revit Specialist", "Revit Developer", "Bentley MicroStation", "ArchiCAD Specialist",
+        "BIM 360 Coordinator", "Autodesk Construction Cloud", "BIM Collaboration",
+        # Roles Emergentes
+        "Digital Twin Specialist", "Smart Building Consultant", "Construction Technology"
     ],
+    
     "Software CAD/GIS": [
-        "Revit", "AutoCAD Civil 3D", "Tekla", "Navisworks", "Infraworks", 
-        "ArcGIS", "QGIS", "GIS Analyst", "CAD Designer", "Civil Engineer"
+        # CAD Software
+        "Revit", "AutoCAD Civil 3D", "AutoCAD", "MicroStation", "Tekla", "Navisworks", 
+        "Infraworks", "Civil 3D", "Plant 3D", "Inventor", "SolidWorks", "CATIA",
+        # GIS Software
+        "ArcGIS", "QGIS", "GIS Analyst", "GIS Specialist", "GIS Developer", "GIS Coordinator",
+        "MapInfo", "PostGIS", "FME", "ArcGIS Enterprise", "ArcGIS Online", "ESRI",
+        # Roles Profesionales
+        "CAD Designer", "CAD Technician", "CAD Manager", "CAD Coordinator",
+        "Civil Engineer", "Structural Engineer", "Architect", "MEP Engineer",
+        "Surveyor", "Cartographer", "Remote Sensing Specialist", "Geospatial Analyst",
+        # Software Especializado
+        "SketchUp", "3ds Max", "Rhino", "Grasshopper", "Bentley STAAD", "SAP2000",
+        "ETABS", "Robot Structural Analysis", "Advance Steel"
     ],
+    
     "Automatización/Desarrollo": [
-        "Python Developer", "Dynamo", "VBA Programming", "C# Developer",
-        "Automation Engineer", "Software Engineer", "Programming", "API Development"
+        # Lenguajes de Programación
+        "Python Developer", "Python Engineer", "C# Developer", ".NET Developer",
+        "JavaScript Developer", "Java Developer", "C++ Developer", "VBA Programming",
+        # Automatización BIM/CAD
+        "Dynamo", "Dynamo Developer", "Grasshopper Developer", "Revit API",
+        "AutoCAD LISP", "VBA Excel", "Revit Add-in Developer", "BIM Programming",
+        # Roles de Desarrollo
+        "Software Engineer", "Software Developer", "Programming", "API Development",
+        "Automation Engineer", "DevOps Engineer", "Full Stack Developer",
+        "Frontend Developer", "Backend Developer", "Mobile Developer",
+        # Tecnologías Emergentes
+        "Machine Learning Engineer", "AI Developer", "Data Engineer", "Cloud Engineer",
+        "Azure Developer", "AWS Developer", "Docker", "Kubernetes", "Git"
     ],
+    
     "Infraestructura/Construcción": [
-        "Infrastructure", "Construction Technology", "Project Manager", 
-        "Civil Engineering", "Construction Manager", "Digital Twins", "Smart Cities"
+        # Gestión de Proyectos
+        "Project Manager", "Construction Manager", "Program Manager", "PMO",
+        "Project Coordinator", "Site Manager", "Construction Supervisor",
+        # Ingeniería Civil
+        "Civil Engineer", "Civil Engineering", "Infrastructure Engineer",
+        "Transportation Engineer", "Water Resources Engineer", "Geotechnical Engineer",
+        "Environmental Engineer", "Hydraulic Engineer", "Traffic Engineer",
+        # Construcción y Tecnología
+        "Construction Technology", "Digital Construction", "Construction Tech",
+        "Building Technology", "Construction Innovation", "Prefab Construction",
+        # Ciudades Inteligentes
+        "Smart Cities", "Digital Twins", "IoT Engineer", "Smart Infrastructure",
+        "Urban Planning", "City Planning", "Infrastructure Planning",
+        # Sostenibilidad
+        "Sustainability Consultant", "Green Building", "LEED", "BREEAM",
+        "Energy Efficiency", "Carbon Footprint", "Renewable Energy"
     ],
+    
     "Datos/Visualización": [
-        "Data Analyst", "Power BI", "Data Visualization", "Business Intelligence",
-        "GIS Analyst", "Spatial Data", "Geographic Information Systems"
+        # Análisis de Datos
+        "Data Analyst", "Data Scientist", "Business Analyst", "Business Intelligence",
+        "Data Engineer", "Analytics Engineer", "Reporting Analyst",
+        # Herramientas de Visualización
+        "Power BI", "Power BI Developer", "Tableau", "Tableau Developer",
+        "Data Visualization", "Dashboard Developer", "Excel Expert",
+        "SQL Developer", "Database Analyst", "ETL Developer",
+        # GIS y Datos Espaciales
+        "GIS Analyst", "Spatial Data Analyst", "Geographic Information Systems",
+        "Spatial Data", "Geospatial Data", "Remote Sensing", "GPS Specialist",
+        # Tecnologías de Datos
+        "SQL Server", "Oracle", "PostgreSQL", "MySQL", "MongoDB", "BigQuery",
+        "Snowflake", "Azure SQL", "AWS RDS", "Data Warehouse", "Data Lake"
+    ],
+    
+    "Arquitectura/Diseño": [
+        # Roles de Arquitectura
+        "Architect", "Senior Architect", "Project Architect", "Design Architect",
+        "Technical Architect", "Architectural Designer", "Architecture Consultant",
+        # Especialidades Arquitectónicas
+        "Landscape Architect", "Interior Designer", "Urban Designer",
+        "Facade Engineer", "Building Envelope", "Acoustic Consultant",
+        # Diseño y Modelado 3D
+        "3D Modeler", "3D Designer", "Visualization Specialist", "Rendering Artist",
+        "Architectural Visualization", "3D Artist", "Virtual Reality Developer",
+        # Software de Diseño
+        "SketchUp Specialist", "3ds Max Artist", "V-Ray Artist", "Lumion",
+        "Enscape", "Twinmotion", "Unreal Engine", "Unity Developer"
+    ],
+    
+    "Gestión/Consultoría": [
+        # Consultoría Técnica
+        "Technical Consultant", "BIM Consultant", "Technology Consultant",
+        "Digital Transformation", "Process Improvement", "Change Management",
+        # Gestión de Activos
+        "Asset Management", "Facility Manager", "CAFM Specialist", "CMMS",
+        "Building Operations", "Property Management", "Real Estate Technology",
+        # Liderazgo Técnico
+        "Technical Lead", "Team Lead", "Department Manager", "CTO",
+        "Innovation Manager", "Digital Strategy", "Technology Director",
+        # Ventas Técnicas
+        "Technical Sales", "Pre-Sales Engineer", "Solution Architect", "Sales Engineer"
+    ],
+    
+    "Tecnologías Emergentes": [
+        # Realidad Virtual/Aumentada
+        "VR Developer", "AR Developer", "Mixed Reality", "Virtual Reality",
+        "Augmented Reality", "HoloLens Developer", "Immersive Technology",
+        # Inteligencia Artificial
+        "AI Engineer", "Machine Learning", "Computer Vision", "Natural Language Processing",
+        "Deep Learning", "Neural Networks", "AI Consultant", "ML Engineer",
+        # IoT y Sensores
+        "IoT Developer", "IoT Engineer", "Sensor Technology", "Smart Sensors",
+        "Industrial IoT", "Building Automation", "Smart Building Technology",
+        # Blockchain y Web3
+        "Blockchain Developer", "Smart Contracts", "Web3 Developer", "DeFi",
+        # Robótica y Automatización
+        "Robotics Engineer", "Automation Specialist", "RPA Developer", "Drone Technology"
     ]
 }
 
-# Preferencias salariales (USD) - Ajustado para mercado colombiano/remoto
+# Preferencias salariales (USD) - Optimizado para mercado global/remoto 2025
 SALARY_PREFERENCES = {
-    "minimum_usd": 25000,     # ~$2,100 USD/mes - Competitivo en Colombia
-    "preferred_usd": 45000,   # ~$3,750 USD/mes - Muy bueno
-    "target_usd": 75000       # ~$6,250 USD/mes - Excelente para remoto
+    "minimum_usd": 30000,     # ~$2,500 USD/mes - Competitivo para Colombia
+    "preferred_usd": 55000,   # ~$4,580 USD/mes - Muy bueno para LATAM/remoto
+    "target_usd": 85000       # ~$7,080 USD/mes - Excelente para remoto global
 }
 
-# Ubicaciones preferidas (Colombia + remoto)
+# Ubicaciones preferidas (Optimizado para búsqueda global)
 PREFERRED_LOCATIONS = [
-    "Remote", "Colombia", "Bogotá", "Bogota", "Medellín", "Medellin", 
-    "Latinoamérica", "Latin America", "Spanish Speaking", "LATAM",
-    "United States", "Canada", "Europe", "Mexico", "Chile", "Argentina"
+    # Remoto y Global
+    "Remote", "Work from Home", "WFH", "Telecommute", "Virtual", "Distributed",
+    # Colombia y LATAM
+    "Colombia", "Bogotá", "Bogota", "Medellín", "Medellin", "Cali", "Barranquilla",
+    "Mexico", "Chile", "Argentina", "Peru", "Ecuador", "Costa Rica", "Panama",
+    "Latinoamérica", "Latin America", "LATAM", "Spanish Speaking",
+    # Mercados Principales
+    "United States", "USA", "Canada", "United Kingdom", "UK", "Europe", "EU",
+    "Australia", "New Zealand", "Germany", "Netherlands", "Spain", "Portugal",
+    # Mercados Emergentes Tech
+    "Singapore", "Dubai", "Israel", "Ireland", "Switzerland", "Denmark", "Sweden"
 ]
 
-# APIs habilitadas
+# APIs habilitadas - Ampliado
 ENABLED_APIS = {
     "remoteok": True,
     "themuse": True,
-    "stackoverflow": True
+    "stackoverflow": True,
+    "github_jobs": False,  # API descontinuada pero mantenemos la estructura
+    "adzuna": False        # Para futuras integraciones
 }
 
-# Filtros de búsqueda optimizados
+# Filtros de búsqueda optimizados - Actualizado 2025
 SEARCH_FILTERS = {
-    "remote_only": False,        # Incluir tanto remotos como presenciales en Bogotá
-    "exclude_agencies": True,    # Excluir agencias de reclutamiento
-    "min_salary": 20000,         # Salario mínimo más realista para el mercado
-    "include_colombia": True     # Priorizar empleos en Colombia
+    "remote_only": False,           # Incluir tanto remotos como presenciales
+    "exclude_agencies": True,       # Excluir agencias de reclutamiento
+    "min_salary": 25000,           # Salario mínimo más competitivo
+    "include_colombia": True,       # Priorizar empleos en Colombia/LATAM
+    "include_entry_level": True,    # Incluir posiciones junior/entry-level
+    "exclude_unpaid": True,         # Excluir trabajos no remunerados
+    "max_job_age_days": 30,        # Empleos máximo 30 días de antigüedad
+    "prioritize_tech_companies": True,  # Priorizar empresas tecnológicas
+    "include_contract": True,       # Incluir trabajos por contrato
+    "include_freelance": True       # Incluir trabajos freelance
 }
 
 # ============================================================================
@@ -125,11 +255,15 @@ class JobSearchEngine:
         # 1. APIs reales con filtro de fechas
         if ENABLED_APIS.get("remoteok", True):
             print("  📡 RemoteOK API (últimos 7 días)...")
-            results.extend(self.search_remoteok(keyword))
+            remoteok_results = self.search_remoteok(keyword)
+            if remoteok_results:
+                results.extend(remoteok_results)
             
         if ENABLED_APIS.get("themuse", True):
             print("  📡 The Muse API...")
-            results.extend(self.search_themuse(keyword))
+            themuse_results = self.search_themuse(keyword)
+            if themuse_results:
+                results.extend(themuse_results)
         
         # 2. Enlaces de LinkedIn optimizados (últimas 72 horas)
         print("  🔗 Generando enlaces LinkedIn (últimas 72h)...")
@@ -904,7 +1038,7 @@ class JobSearchGUI:
                         image.thumbnail((250, 100), Image.Resampling.LANCZOS)
                         large_logo = ImageTk.PhotoImage(image)
                         logo_label = tk.Label(header_frame, image=large_logo, bg='#2c3e50')
-                        logo_label.image = large_logo  # Mantener referencia
+                        logo_label.image = large_logo  # type: ignore # Mantener referencia
                         logo_label.pack(expand=True)
             except Exception:
                 pass
@@ -1454,9 +1588,9 @@ def main():
         elif sys.argv[1] == "--help":
             print("🚀 Sistema de Búsqueda de Empleos")
             print("\nUso:")
-            print("  python job_search_complete.py           - Interfaz gráfica")
-            print("  python job_search_complete.py --console - Modo consola")
-            print("  python job_search_complete.py --help    - Esta ayuda")
+            print("  python job_search_bim.py           - Interfaz gráfica")
+            print("  python job_search_bim.py --console - Modo consola")
+            print("  python job_search_bim.py --help    - Esta ayuda")
         else:
             print(f"❌ Argumento desconocido: {sys.argv[1]}")
     else:
